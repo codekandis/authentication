@@ -25,7 +25,8 @@
 		"source": "https://github.com/codekandis/authentication/tree/master"
 	},
 	"require": {
-		"php": "^7.4"
+		"php": "^7.4",
+		"codekandis/session": "^0"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-master",
