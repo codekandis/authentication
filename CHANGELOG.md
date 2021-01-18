@@ -5,17 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [keep a changelog][xtlink-keep-a-changelog]
 and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioning].
 
+## [0.3.0] - 2021-01-18
+
+### Changed
+
+* composer package dependencies
+  * removed
+    * `sensiolabs/security-checker`  
+    * `phpunit/phpunit`
+  * changed
+    * `minimum-stability` [stable]
+  * added
+    * `codekandis/phpunit` [^3]
+* `PHPUnit` configuration
+
+[0.3.0]: https://github.com/codekandis/authentication/compare/0.2.0..0.3.0
+
+---
 ## [0.2.0] - 2020-09-29
 
 ### Added
 
 * authorization header parser
 
-
 [0.2.0]: https://github.com/codekandis/authentication/compare/0.1.0..0.2.0
 
 ---
-## 0.1.0 - 2020-09-28
+## [0.1.0] - 2020-09-28
 
 ### Added
 
@@ -31,7 +47,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
   * stateless authenticator
   * stateful authenticator interface
   * stateful session based authenticator
-
+    
 [0.1.0]: https://github.com/codekandis/authentication/tree/0.1.0
 
 
