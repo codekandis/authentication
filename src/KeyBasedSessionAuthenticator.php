@@ -27,20 +27,21 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	private SessionHandlerInterface $sessionHandler;
 
 	/**
-	 * Stores the session key storing if the client has been authenticated.
+	 * Stores the session key storing the registered client.
 	 * @var string
 	 */
-	private string $sessionKey;
+	private string $registeredClientSessionKey;
 
 	/**
 	 * Constructor method.
 	 * @param SessionHandlerInterface $sessionHandler The session handler the authentication adapter is based on.
-	 * @param string The session key storing if the client has been authenticated.
+	 * @param string $registeredClientSessionKey The session key storing the registered client.
 	 */
-	public function __construct( SessionHandlerInterface $sessionHandler, string $sessionKey )
+	public function __construct( SessionHandlerInterface $sessionHandler, string $registeredClientSessionKey )
 	{
-		$this->sessionHandler = $sessionHandler;
-		$this->sessionKey     = $sessionKey;
+		$this->sessionHandler             = $sessionHandler;
+		$this->registeredClientSessionKey = $registeredClientSessionKey;
+
 		$this->initAuthentication();
 	}
 
@@ -50,10 +51,13 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	private function initAuthentication(): void
 	{
 		$this->sessionHandler->start();
-		if ( false === $this->sessionHandler->has( $this->sessionKey ) )
+		if ( false === $this->sessionHandler->has( $this->registeredClientSessionKey ) )
 		{
 			$this->sessionHandler->regenerateId( true );
-			$this->sessionHandler->set( $this->sessionKey, Permission::DENIED );
+			$this->sessionHandler->set(
+				$this->registeredClientSessionKey,
+				new RegisteredKeyBasedClient( '', '', Permission::DENIED )
+			);
 		}
 		$this->sessionHandler->writeClose();
 	}
@@ -66,7 +70,10 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 		$this->sessionHandler->start();
 		try
 		{
-			$permission = $this->sessionHandler->get( $this->sessionKey );
+			/**
+			 * @var RegisteredKeyBasedClientInterface $registeredClient
+			 */
+			$registeredClient = $this->sessionHandler->get( $this->registeredClientSessionKey );
 			$this->sessionHandler->writeClose();
 		}
 		catch ( SessionKeyNotFoundException $exception )
@@ -75,14 +82,14 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 			throw new AuthenticationIsCorruptedException(
 				sprintf(
 					static::ERROR_SESSION_KEY_DOES_NOT_EXIST,
-					$this->sessionKey
+					$this->registeredClientSessionKey
 				),
 				0,
 				$exception
 			);
 		}
 
-		return $permission === Permission::GRANTED;
+		return $registeredClient->getPermission() === Permission::GRANTED;
 	}
 
 	/**
@@ -103,7 +110,7 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 			{
 				$this->sessionHandler->start();
 				$this->sessionHandler->regenerateId( true );
-				$this->sessionHandler->set( $this->sessionKey, Permission::GRANTED );
+				$this->sessionHandler->set( $this->registeredClientSessionKey, $registeredClientFetched );
 				$this->sessionHandler->writeClose();
 
 				return true;
@@ -120,7 +127,10 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	{
 		$this->sessionHandler->start();
 		$this->sessionHandler->regenerateId( true );
-		$this->sessionHandler->set( $this->sessionKey, Permission::DENIED );
+		$this->sessionHandler->set(
+			$this->registeredClientSessionKey,
+			new RegisteredKeyBasedClient( '', '', Permission::DENIED )
+		);
 		$this->sessionHandler->writeClose();
 	}
 }
