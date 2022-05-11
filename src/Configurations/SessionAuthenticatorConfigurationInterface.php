@@ -1,14 +1,12 @@
 <?php declare( strict_types = 1 );
-namespace CodeKandis\Authentication;
-
-use CodeKandis\Configurations\ConfigurationInterface;
+namespace CodeKandis\Authentication\Configurations;
 
 /**
  * Represents the interface of any session authenticator configuration.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-interface SessionAuthenticatorConfigurationInterface extends ConfigurationInterface
+interface SessionAuthenticatorConfigurationInterface
 {
 	/**
 	 * Gets the session key used to store the registered client.
