@@ -1,6 +1,6 @@
 {
 	"name": "codekandis/authentication",
-	"description": "This library provides authentication adapters for various authentication methods.",
+	"description": "`codekandis/authentication` is a library providing authentication adapters for various authentication methods.",
 	"keywords": [
 		"php",
 		"library",
@@ -26,7 +26,6 @@
 	},
 	"require": {
 		"php": "^7.4",
-		"codekandis/configurations": "^0",
 		"codekandis/session": "^0"
 	},
 	"require-dev": {
