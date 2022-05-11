@@ -5,7 +5,7 @@
 [![Minimum PHP Version][xtlink-php-version-badge]][xtlink-php-net]
 ![Code Coverage][xtlink-code-coverage-badge]
 
-This library provides authentication adapters for various authentication methods.
+`codekandis/authentication` is a library providing authentication adapters for various authentication methods.
 
 ## Index
 
