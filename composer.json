@@ -26,6 +26,7 @@
 	},
 	"require": {
 		"php": "^7.4",
+		"codekandis/ldap": "^0",
 		"codekandis/session": "^0"
 	},
 	"require-dev": {
