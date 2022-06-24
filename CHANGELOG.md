@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [keep a changelog][xtlink-keep-a-changelog]
 and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioning].
 
+## [0.7.0] - 2022-06-24
+
+### Fixed
+
+* PHPDoc
+
+### Added
+
+* session authenticator initialization by configuration
+* LDAP authenticator configuration
+* LDAP session authenticator configuration
+
+[0.7.0]: https://github.com/codekandis/authentication/compare/0.6.0..0.7.0
+
+---
 ## [0.6.0] - 2022-05-21
 
 ### Added
