@@ -9,7 +9,7 @@ use function sprintf;
 /**
  * Represents a common stateful authenticator based on a session.
  * A common authenticator is based on clients providing an ID and a passcode.
- * A stateful authenticator stores the clients' permission.
+ * A stateful authenticator persists the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */

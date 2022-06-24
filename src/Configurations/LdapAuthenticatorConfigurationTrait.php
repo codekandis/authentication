@@ -9,7 +9,7 @@ namespace CodeKandis\Authentication\Configurations;
 trait LdapAuthenticatorConfigurationTrait
 {
 	/**
-	 * Stores the session key used to store the registered client.
+	 * Stores the session key used to persist the registered client.
 	 * @var string
 	 */
 	private string $permittedLdapGroup = '';

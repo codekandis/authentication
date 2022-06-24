@@ -9,7 +9,7 @@ use function sprintf;
 /**
  * Represents a key based stateful authenticator based on a session.
  * A key based authenticator is based on clients providing a key.
- * A stateful authenticator stores the clients' permission.
+ * A stateful authenticator persists the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */

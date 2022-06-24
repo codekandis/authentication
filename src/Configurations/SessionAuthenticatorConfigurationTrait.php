@@ -9,7 +9,7 @@ namespace CodeKandis\Authentication\Configurations;
 trait SessionAuthenticatorConfigurationTrait
 {
 	/**
-	 * Stores the session key used to store the registered client.
+	 * Stores the session key used to persist the registered client.
 	 * @var string
 	 */
 	private string $registeredClientSessionKey = '';
@@ -23,8 +23,8 @@ trait SessionAuthenticatorConfigurationTrait
 	}
 
 	/**
-	 * Sets the session key used to store the registered client.
-	 * @param string $registeredClientSessionKey The session key used to store the registered client.
+	 * Sets the session key used to persist the registered client.
+	 * @param string $registeredClientSessionKey The session key used to persist the registered client.
 	 */
 	public function setRegisteredClientSessionKey( string $registeredClientSessionKey ): void
 	{
