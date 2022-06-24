@@ -19,10 +19,4 @@ interface LdapClientCredentialsInterface
 	 * @return string The passcode of the client.
 	 */
 	public function getPassCode(): string;
-
-	/**
-	 * Gets the name of group the client must be a member of.
-	 * @return ?string The name of the group the client must be a member of or null if no group membership is necessary.
-	 */
-	public function getGroupMembership(): ?string;
 }

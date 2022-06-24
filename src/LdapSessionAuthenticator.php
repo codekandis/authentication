@@ -1,6 +1,7 @@
 <?php declare( strict_types = 1 );
 namespace CodeKandis\Authentication;
 
+use CodeKandis\Authentication\Configurations\LdapSessionAuthenticatorConfigurationInterface;
 use CodeKandis\Authentication\Configurations\SessionAuthenticatorConfigurationInterface;
 use CodeKandis\Ldap\LdapConnectorInterface;
 use CodeKandis\Session\SessionHandlerInterface;
@@ -9,7 +10,7 @@ use function sprintf;
 
 /**
  * Represents an LDAP authenticator based on a session.
- * A LDAP authenticator is based on clients providing an ID and a passcode.
+ * An LDAP authenticator is based on clients providing an ID and a passcode.
  * A stateful authenticator stores the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
@@ -23,7 +24,7 @@ class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements Ldap
 	protected const ERROR_SESSION_KEY_DOES_NOT_EXIST = 'The session key \'%s\' does not exist in the session.';
 
 	/**
-	 * Stores the configuration of the session authenticator.
+	 * Stores the configuration of the LDAP session authenticator.
 	 * @var SessionAuthenticatorConfigurationInterface
 	 */
 	private SessionAuthenticatorConfigurationInterface $configuration;
@@ -36,13 +37,13 @@ class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements Ldap
 
 	/**
 	 * Constructor method.
-	 * @param SessionAuthenticatorConfigurationInterface $configuration The configuration of the session authenticator.
+	 * @param LdapSessionAuthenticatorConfigurationInterface $configuration The configuration of the LDAP session authenticator.
 	 * @param SessionHandlerInterface $sessionHandler The session handler the authentication adapter is based on.
 	 * @param LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
 	 */
-	public function __construct( SessionAuthenticatorConfigurationInterface $configuration, SessionHandlerInterface $sessionHandler, LdapConnectorInterface $ldapConnector )
+	public function __construct( LdapSessionAuthenticatorConfigurationInterface $configuration, SessionHandlerInterface $sessionHandler, LdapConnectorInterface $ldapConnector )
 	{
-		parent::__construct( $ldapConnector );
+		parent::__construct( $configuration, $ldapConnector );
 
 		$this->configuration  = $configuration;
 		$this->sessionHandler = $sessionHandler;
@@ -107,8 +108,6 @@ class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements Ldap
 		{
 			return false;
 		}
-
-		$registeredClientSessionKey = $this->configuration->getRegisteredClientSessionKey();
 
 		$this->sessionHandler->start();
 		$this->sessionHandler->regenerateId( true );
