@@ -1,6 +1,7 @@
 <?php declare( strict_types = 1 );
 namespace CodeKandis\Authentication;
 
+use CodeKandis\Authentication\Configurations\SessionAuthenticatorConfigurationInterface;
 use CodeKandis\Session\SessionHandlerInterface;
 use CodeKandis\Session\SessionKeyNotFoundException;
 use function sprintf;
@@ -21,26 +22,26 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	protected const ERROR_SESSION_KEY_DOES_NOT_EXIST = 'The session key \'%s\' does not exist in the session.';
 
 	/**
+	 * Stores the configuration of the session authenticator.
+	 * @var SessionAuthenticatorConfigurationInterface
+	 */
+	private SessionAuthenticatorConfigurationInterface $configuration;
+
+	/**
 	 * Stores the session handler of the session authenticator.
 	 * @var SessionHandlerInterface
 	 */
 	private SessionHandlerInterface $sessionHandler;
 
 	/**
-	 * Stores the session key storing the registered client.
-	 * @var string
-	 */
-	private string $registeredClientSessionKey;
-
-	/**
 	 * Constructor method.
+	 * @param SessionAuthenticatorConfigurationInterface $configuration The configuration of the session authenticator.
 	 * @param SessionHandlerInterface $sessionHandler The session handler the authentication adapter is based on.
-	 * @param string $registeredClientSessionKey The session key storing the registered client.
 	 */
-	public function __construct( SessionHandlerInterface $sessionHandler, string $registeredClientSessionKey )
+	public function __construct( SessionAuthenticatorConfigurationInterface $configuration, SessionHandlerInterface $sessionHandler )
 	{
-		$this->sessionHandler             = $sessionHandler;
-		$this->registeredClientSessionKey = $registeredClientSessionKey;
+		$this->configuration  = $configuration;
+		$this->sessionHandler = $sessionHandler;
 
 		$this->initAuthentication();
 	}
@@ -50,12 +51,14 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	 */
 	private function initAuthentication(): void
 	{
+		$registeredClientSessionKey = $this->configuration->getRegisteredClientSessionKey();
+
 		$this->sessionHandler->start();
-		if ( false === $this->sessionHandler->has( $this->registeredClientSessionKey ) )
+		if ( false === $this->sessionHandler->has( $registeredClientSessionKey ) )
 		{
 			$this->sessionHandler->regenerateId( true );
 			$this->sessionHandler->set(
-				$this->registeredClientSessionKey,
+				$registeredClientSessionKey,
 				new RegisteredKeyBasedClient( '', '', Permission::DENIED )
 			);
 		}
@@ -67,23 +70,22 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 	 */
 	public function isClientGranted(): bool
 	{
+		$registeredClientSessionKey = $this->configuration->getRegisteredClientSessionKey();
+
 		$this->sessionHandler->start();
 		try
 		{
 			/**
 			 * @var RegisteredKeyBasedClientInterface $registeredClient
 			 */
-			$registeredClient = $this->sessionHandler->get( $this->registeredClientSessionKey );
+			$registeredClient = $this->sessionHandler->get( $registeredClientSessionKey );
 			$this->sessionHandler->writeClose();
 		}
 		catch ( SessionKeyNotFoundException $exception )
 		{
 			$this->sessionHandler->destroy();
 			throw new AuthenticationIsCorruptedException(
-				sprintf(
-					static::ERROR_SESSION_KEY_DOES_NOT_EXIST,
-					$this->registeredClientSessionKey
-				),
+				sprintf( static::ERROR_SESSION_KEY_DOES_NOT_EXIST, $registeredClientSessionKey ),
 				0,
 				$exception
 			);
@@ -110,7 +112,11 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 			{
 				$this->sessionHandler->start();
 				$this->sessionHandler->regenerateId( true );
-				$this->sessionHandler->set( $this->registeredClientSessionKey, $registeredClientFetched );
+				$this->sessionHandler->set(
+					$this->configuration
+						->getRegisteredClientSessionKey(),
+					$registeredClientFetched
+				);
 				$this->sessionHandler->writeClose();
 
 				return true;
@@ -128,7 +134,8 @@ class KeyBasedSessionAuthenticator implements KeyBasedStatefulAuthenticatorInter
 		$this->sessionHandler->start();
 		$this->sessionHandler->regenerateId( true );
 		$this->sessionHandler->set(
-			$this->registeredClientSessionKey,
+			$this->configuration
+				->getRegisteredClientSessionKey(),
 			new RegisteredKeyBasedClient( '', '', Permission::DENIED )
 		);
 		$this->sessionHandler->writeClose();
