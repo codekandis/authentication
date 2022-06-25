@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [keep a changelog][xtlink-keep-a-changelog]
 and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioning].
 
+## [0.8.0] - 2022-06-25
+
+### Changed
+
+* made the LDAP connector on LDAP authenticator constructors optional
+
+[0.8.0]: https://github.com/codekandis/authentication/compare/0.7.0..0.8.0
+
+---
 ## [0.7.0] - 2022-06-24
 
 ### Fixed
