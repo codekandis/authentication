@@ -12,6 +12,7 @@ class LdapStatelessAuthenticator extends AbstractLdapAuthenticator
 {
 	/**
 	 * @inheritDoc
+	 * @throws NoLdapConnectorProvidedException No LDAP connector has been provided.
 	 */
 	public function requestPermission( LdapClientCredentialsInterface $clientCredentials ): bool
 	{

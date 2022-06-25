@@ -39,9 +39,9 @@ class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements Ldap
 	 * Constructor method.
 	 * @param LdapSessionAuthenticatorConfigurationInterface $configuration The configuration of the LDAP session authenticator.
 	 * @param SessionHandlerInterface $sessionHandler The session handler the authentication adapter is based on.
-	 * @param LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
+	 * @param ?LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
 	 */
-	public function __construct( LdapSessionAuthenticatorConfigurationInterface $configuration, SessionHandlerInterface $sessionHandler, LdapConnectorInterface $ldapConnector )
+	public function __construct( LdapSessionAuthenticatorConfigurationInterface $configuration, SessionHandlerInterface $sessionHandler, ?LdapConnectorInterface $ldapConnector )
 	{
 		parent::__construct( $configuration, $ldapConnector );
 
@@ -101,6 +101,7 @@ class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements Ldap
 
 	/**
 	 * @inheritDoc
+	 * @throws NoLdapConnectorProvidedException No LDAP connector has been provided.
 	 */
 	public function requestPermission( LdapClientCredentialsInterface $clientCredentials ): bool
 	{

@@ -4,7 +4,6 @@ namespace CodeKandis\Authentication;
 use CodeKandis\Authentication\Configurations\LdapAuthenticatorConfigurationInterface;
 use CodeKandis\Ldap\Credentials\LdapClientCredentials as OriginLdapClientCredentials;
 use CodeKandis\Ldap\LdapConnectionBindingFailedException;
-use CodeKandis\Ldap\LdapConnector;
 use CodeKandis\Ldap\LdapConnectorInterface;
 use CodeKandis\Ldap\Search\Filters\LdapSearchComparisonEqualToFilter;
 use CodeKandis\Ldap\Search\Filters\LdapSearchLogicalAndOperatorFilter;
@@ -19,6 +18,12 @@ use CodeKandis\Ldap\Search\Filters\LdapSearchLogicalAndOperatorFilter;
 abstract class AbstractLdapAuthenticator implements LdapStatelessAuthenticatorInterface
 {
 	/**
+	 * Represents the error message if no LDAP connector has been provided.
+	 * @var string
+	 */
+	protected const ERROR_NO_LDAP_CONNECTOR_PROVIDED = 'No LDAP connector has been provided.';
+
+	/**
 	 * Stores the configuration of the LDAP authenticator.
 	 * @var LdapAuthenticatorConfigurationInterface
 	 */
@@ -27,14 +32,14 @@ abstract class AbstractLdapAuthenticator implements LdapStatelessAuthenticatorIn
 	/**
 	 * Stores the session key storing the registered client.
 	 */
-	protected LdapConnector $ldapConnector;
+	protected ?LdapConnectorInterface $ldapConnector;
 
 	/**
 	 * Constructor method.
 	 * @param LdapAuthenticatorConfigurationInterface $configuration The configuration of the LDAP authenticator.
-	 * @param LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
+	 * @param ?LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
 	 */
-	public function __construct( LdapAuthenticatorConfigurationInterface $configuration, LdapConnectorInterface $ldapConnector )
+	public function __construct( LdapAuthenticatorConfigurationInterface $configuration, ?LdapConnectorInterface $ldapConnector )
 	{
 		$this->configuration = $configuration;
 		$this->ldapConnector = $ldapConnector;
@@ -44,9 +49,15 @@ abstract class AbstractLdapAuthenticator implements LdapStatelessAuthenticatorIn
 	 * Authenticates the client.
 	 * @param LdapClientCredentialsInterface $clientCredentials The credentials of the client to be authenticated.
 	 * @return bool True if the client has been authenticated, false otherwise.
+	 * @throws NoLdapConnectorProvidedException No LDAP connector has been provided.
 	 */
 	protected function authenticate( LdapClientCredentialsInterface $clientCredentials ): bool
 	{
+		if ( null === $this->ldapConnector )
+		{
+			throw new NoLdapConnectorProvidedException( static::ERROR_NO_LDAP_CONNECTOR_PROVIDED );
+		}
+
 		try
 		{
 			$this->ldapConnector->authenticate(
