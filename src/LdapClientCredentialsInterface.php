@@ -15,8 +15,8 @@ interface LdapClientCredentialsInterface
 	public function getId(): string;
 
 	/**
-	 * Gets the passcode of the client.
-	 * @return string The passcode of the client.
+	 * Gets the password of the client.
+	 * @return string The password of the client.
 	 */
 	public function getPassCode(): string;
 }

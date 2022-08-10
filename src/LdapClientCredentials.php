@@ -2,7 +2,7 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents LDAP client credentials providing an ID and a passcode.
+ * Represents LDAP client credentials providing an ID and a password.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
@@ -15,20 +15,20 @@ class LdapClientCredentials implements LdapClientCredentialsInterface
 	private string $id;
 
 	/**
-	 * Stores the passcode of the client.
+	 * Stores the password of the client.
 	 * @var string
 	 */
-	private string $passCode;
+	private string $password;
 
 	/**
 	 * Constructor method.
 	 * @param string $id The ID of the client.
-	 * @param string $passCode The passcode of the client.
+	 * @param string $password The password of the client.
 	 */
-	public function __construct( string $id, string $passCode )
+	public function __construct( string $id, string $password )
 	{
 		$this->id       = $id;
-		$this->passCode = $passCode;
+		$this->password = $password;
 	}
 
 	/**
@@ -44,6 +44,6 @@ class LdapClientCredentials implements LdapClientCredentialsInterface
 	 */
 	public function getPassCode(): string
 	{
-		return $this->passCode;
+		return $this->password;
 	}
 }

@@ -3,7 +3,7 @@ namespace CodeKandis\Authentication;
 
 /**
  * Represents the interface of all common stateless authenticators.
- * A common authenticator is based on clients providing an ID and a passcode.
+ * A common authenticator is based on clients providing an ID and a password.
  * A stateless authenticator does not persist the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
