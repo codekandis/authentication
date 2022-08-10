@@ -5,13 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [keep a changelog][xtlink-keep-a-changelog]
 and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioning].
 
+## [0.9.0] - 2022-08-11
+
+### Changed
+
+* renamed `passcode` to `password`
+
+[0.9.0]: https://github.com/codekandis/authentication/compare/0.8.0...0.9.0
+
+---
 ## [0.8.0] - 2022-06-25
 
 ### Changed
 
 * made the LDAP connector on LDAP authenticator constructors optional
 
-[0.8.0]: https://github.com/codekandis/authentication/compare/0.7.0..0.8.0
+[0.8.0]: https://github.com/codekandis/authentication/compare/0.7.0...0.8.0
 
 ---
 ## [0.7.0] - 2022-06-24
@@ -26,7 +35,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
 * LDAP authenticator configuration
 * LDAP session authenticator configuration
 
-[0.7.0]: https://github.com/codekandis/authentication/compare/0.6.0..0.7.0
+[0.7.0]: https://github.com/codekandis/authentication/compare/0.6.0...0.7.0
 
 ---
 ## [0.6.0] - 2022-05-21
@@ -41,7 +50,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
   * stateless authenticator
   * stateful session based authenticator
 
-[0.6.0]: https://github.com/codekandis/authentication/compare/0.5.0..0.6.0
+[0.6.0]: https://github.com/codekandis/authentication/compare/0.5.0...0.6.0
 
 ---
 ## [0.5.0] - 2022-05-11
@@ -54,7 +63,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
   * changed
     * description
 
-[0.5.0]: https://github.com/codekandis/authentication/compare/0.4.0..0.5.0
+[0.5.0]: https://github.com/codekandis/authentication/compare/0.4.0...0.5.0
 
 ---
 ## [0.4.0] - 2022-01-08
@@ -66,7 +75,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
     * `codekandis/configurations` [^0]
 * session authenticator configuration
 
-[0.4.0]: https://github.com/codekandis/authentication/compare/0.3.0..0.4.0
+[0.4.0]: https://github.com/codekandis/authentication/compare/0.3.0...0.4.0
 
 ---
 ## [0.3.0] - 2021-01-18
@@ -83,7 +92,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
     * `codekandis/phpunit` [^3]
 * `PHPUnit` configuration
 
-[0.3.0]: https://github.com/codekandis/authentication/compare/0.2.0..0.3.0
+[0.3.0]: https://github.com/codekandis/authentication/compare/0.2.0...0.3.0
 
 ---
 ## [0.2.0] - 2020-09-29
@@ -92,7 +101,7 @@ and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioni
 
 * authorization header parser
 
-[0.2.0]: https://github.com/codekandis/authentication/compare/0.1.0..0.2.0
+[0.2.0]: https://github.com/codekandis/authentication/compare/0.1.0...0.2.0
 
 ---
 ## [0.1.0] - 2020-09-28
