@@ -15,7 +15,7 @@ class SessionAuthenticatorConfiguration implements SessionAuthenticatorConfigura
 	private string $registeredClientSessionKey = '';
 
 	/**
-	 * {@inheritDoc}
+	 * @inheritDoc
 	 */
 	public function getRegisteredClientSessionKey(): string
 	{

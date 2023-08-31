@@ -2,13 +2,13 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents the interface of all key based stateful authenticators.
- * A key based authenticator is based on clients providing a key.
+ * Represents the interface of all LDAP stateful authenticators.
+ * A LDAP authenticator is based on clients providing a key.
  * A stateful authenticator stores the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-interface KeyBasedStatefulAuthenticatorInterface extends KeyBasedStatelessAuthenticatorInterface
+interface LdapStatefulAuthenticatorInterface extends LdapStatelessAuthenticatorInterface
 {
 	/**
 	 * Determines if the client has been granted permission.

@@ -1,18 +1,19 @@
 <?php declare( strict_types = 1 );
 namespace CodeKandis\Authentication;
 
+use CodeKandis\Ldap\LdapConnectorInterface;
 use CodeKandis\Session\SessionHandlerInterface;
 use CodeKandis\Session\SessionKeyNotFoundException;
 use function sprintf;
 
 /**
- * Represents a common stateful authenticator based on a session.
- * A common authenticator is based on clients providing an ID and a passcode.
+ * Represents an LDAP authenticator based on a session.
+ * A LDAP authenticator is based on clients providing an ID and a passcode.
  * A stateful authenticator stores the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
+class LdapSessionAuthenticator extends AbstractLdapAuthenticator implements LdapStatefulAuthenticatorInterface
 {
 	/**
 	 * Represents the error message if a session key does not exist.
@@ -36,9 +37,12 @@ class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
 	 * Constructor method.
 	 * @param SessionHandlerInterface $sessionHandler The session handler the authentication adapter is based on.
 	 * @param string $registeredClientSessionKey The session key storing the registered client.
+	 * @param LdapConnectorInterface $ldapConnector The LDAP connector to be used for authentication.
 	 */
-	public function __construct( SessionHandlerInterface $sessionHandler, string $registeredClientSessionKey )
+	public function __construct( SessionHandlerInterface $sessionHandler, string $registeredClientSessionKey, LdapConnectorInterface $ldapConnector )
 	{
+		parent::__construct( $ldapConnector );
+
 		$this->sessionHandler             = $sessionHandler;
 		$this->registeredClientSessionKey = $registeredClientSessionKey;
 
@@ -56,7 +60,7 @@ class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
 			$this->sessionHandler->regenerateId( true );
 			$this->sessionHandler->set(
 				$this->registeredClientSessionKey,
-				new RegisteredCommonClient( '', '', '', Permission::DENIED )
+				new RegisteredLdapClient( '', '', '', Permission::DENIED )
 			);
 		}
 		$this->sessionHandler->writeClose();
@@ -71,7 +75,7 @@ class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
 		try
 		{
 			/**
-			 * @var RegisteredCommonClientInterface $registeredClient
+			 * @var RegisteredLdapClientInterface $registeredClient
 			 */
 			$registeredClient = $this->sessionHandler->get( $this->registeredClientSessionKey );
 			$this->sessionHandler->writeClose();
@@ -95,30 +99,27 @@ class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function requestPermission( array $registeredClients, CommonClientCredentialsInterface $clientCredentials ): bool
+	public function requestPermission( LdapClientCredentialsInterface $clientCredentials ): bool
 	{
-		if ( true === $this->isClientGranted() )
+		if ( false === $this->authenticate( $clientCredentials ) )
 		{
-			return true;
+			return false;
 		}
-		foreach ( $registeredClients as $registeredClientFetched )
-		{
-			if (
-				Permission::GRANTED === $registeredClientFetched->getPermission()
-				&& $registeredClientFetched->getId() === $clientCredentials->getId()
-				&& $registeredClientFetched->getPassCode() === $clientCredentials->getPassCodeSha512()
+
+		$this->sessionHandler->start();
+		$this->sessionHandler->regenerateId( true );
+		$this->sessionHandler->set(
+			$this->registeredClientSessionKey,
+			new RegisteredLdapClient(
+				'',
+				$clientCredentials->getId(),
+				$clientCredentials->getPassCode(),
+				Permission::GRANTED
 			)
-			{
-				$this->sessionHandler->start();
-				$this->sessionHandler->regenerateId( true );
-				$this->sessionHandler->set( $this->registeredClientSessionKey, $registeredClientFetched );
-				$this->sessionHandler->writeClose();
+		);
+		$this->sessionHandler->writeClose();
 
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	/**
@@ -130,7 +131,7 @@ class CommonSessionAuthenticator implements CommonStatefulAuthenticatorInterface
 		$this->sessionHandler->regenerateId( true );
 		$this->sessionHandler->set(
 			$this->registeredClientSessionKey,
-			new RegisteredCommonClient( '', '', '', Permission::DENIED )
+			new RegisteredLdapClient( '', '', '', Permission::DENIED )
 		);
 		$this->sessionHandler->writeClose();
 	}

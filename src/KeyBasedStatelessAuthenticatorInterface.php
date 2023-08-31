@@ -4,7 +4,7 @@ namespace CodeKandis\Authentication;
 /**
  * Represents the interface of all key based stateless authenticators.
  * A key based authenticator is based on clients providing a key.
- * A stateless authenticator does not store the clients permission.
+ * A stateless authenticator does not store the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
