@@ -2,7 +2,7 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents a registered LDAP client providing an ID and a passcode.
+ * Represents a registered LDAP client providing an ID and a password.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
@@ -21,10 +21,10 @@ class RegisteredLdapClient implements RegisteredCommonClientInterface
 	private string $id;
 
 	/**
-	 * Stores the passcode of the client.
+	 * Stores the password of the client.
 	 * @var string
 	 */
-	private string $passCode;
+	private string $password;
 
 	/**
 	 * Stores the permission of the client.
@@ -36,14 +36,14 @@ class RegisteredLdapClient implements RegisteredCommonClientInterface
 	 * Constructor method.
 	 * @param string $description The description of the client.
 	 * @param string $id The ID of the client.
-	 * @param string $passCode The passcode of the client.
+	 * @param string $password The password of the client.
 	 * @param int $permission The permission of the client.
 	 */
-	public function __construct( string $description, string $id, string $passCode, int $permission )
+	public function __construct( string $description, string $id, string $password, int $permission )
 	{
 		$this->description = $description;
 		$this->id          = $id;
-		$this->passCode    = $passCode;
+		$this->password    = $password;
 		$this->permission  = $permission;
 	}
 
@@ -68,7 +68,7 @@ class RegisteredLdapClient implements RegisteredCommonClientInterface
 	 */
 	public function getPassCode(): string
 	{
-		return $this->passCode;
+		return $this->password;
 	}
 
 	/**

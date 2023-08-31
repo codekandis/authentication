@@ -2,7 +2,7 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents the interface of all registered LDAP clients providing an ID and a passcode.
+ * Represents the interface of all registered LDAP clients providing an ID and a password.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
@@ -21,8 +21,8 @@ interface RegisteredLdapClientInterface
 	public function getId(): string;
 
 	/**
-	 * Gets the passcode of the client.
-	 * @return string The passcode of the client.
+	 * Gets the password of the client.
+	 * @return string The password of the client.
 	 */
 	public function getPassCode(): string;
 

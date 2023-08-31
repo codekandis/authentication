@@ -10,7 +10,7 @@ use function sprintf;
 
 /**
  * Represents an LDAP authenticator based on a session.
- * An LDAP authenticator is based on clients providing an ID and a passcode.
+ * An LDAP authenticator is based on clients providing an ID and a password.
  * A stateful authenticator persists the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
