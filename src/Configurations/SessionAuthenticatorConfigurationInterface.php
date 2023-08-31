@@ -9,8 +9,8 @@ namespace CodeKandis\Authentication\Configurations;
 interface SessionAuthenticatorConfigurationInterface
 {
 	/**
-	 * Gets the session key used to store the registered client.
-	 * @return string The session key used to store the registered client.
+	 * Gets the session key used to persist the registered client.
+	 * @return string The session key used to persist the registered client.
 	 */
 	public function getRegisteredClientSessionKey(): string;
 }

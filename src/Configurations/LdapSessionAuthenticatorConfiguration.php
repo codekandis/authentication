@@ -2,11 +2,12 @@
 namespace CodeKandis\Authentication\Configurations;
 
 /**
- * Represents a session authenticator configuration.
+ * Represents an LDAP session authenticator configuration.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-class SessionAuthenticatorConfiguration implements SessionAuthenticatorConfigurationInterface
+class LdapSessionAuthenticatorConfiguration implements LdapSessionAuthenticatorConfigurationInterface
 {
+	use LdapAuthenticatorConfigurationTrait;
 	use SessionAuthenticatorConfigurationTrait;
 }

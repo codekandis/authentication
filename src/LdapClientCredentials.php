@@ -21,22 +21,14 @@ class LdapClientCredentials implements LdapClientCredentialsInterface
 	private string $passCode;
 
 	/**
-	 * Stores The name of the group the client must be a member of.
-	 * @var ?string
-	 */
-	private ?string $groupMembership;
-
-	/**
 	 * Constructor method.
 	 * @param string $id The ID of the client.
 	 * @param string $passCode The passcode of the client.
-	 * @param ?string $groupMembership The name of the group the client must be a member of or null if no group membership is necessary.
 	 */
-	public function __construct( string $id, string $passCode, ?string $groupMembership )
+	public function __construct( string $id, string $passCode )
 	{
-		$this->id              = $id;
-		$this->passCode        = $passCode;
-		$this->groupMembership = $groupMembership;
+		$this->id       = $id;
+		$this->passCode = $passCode;
 	}
 
 	/**
@@ -53,13 +45,5 @@ class LdapClientCredentials implements LdapClientCredentialsInterface
 	public function getPassCode(): string
 	{
 		return $this->passCode;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getGroupMembership(): ?string
-	{
-		return $this->groupMembership;
 	}
 }
