@@ -2,7 +2,7 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents the interface of all common client credentials providing an ID and a password.
+ * Represents the interface of all common client credentials providing an ID and a key.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
@@ -15,14 +15,14 @@ interface CommonClientCredentialsInterface
 	public function getId(): string;
 
 	/**
-	 * Gets the password of the client.
-	 * @return string The password of the client.
+	 * Gets the key of the client.
+	 * @return string The key of the client.
 	 */
-	public function getPassCode(): string;
+	public function getKey(): string;
 
 	/**
-	 * Gets the SHA512 hash of the password of the client.
-	 * @return string The SHA512 hash of the password of the client.
+	 * Gets the SHA512 hash of the key of the client.
+	 * @return string The SHA512 hash of the key of the client.
 	 */
-	public function getPassCodeSha512(): string;
+	public function getKeySha512(): string;
 }

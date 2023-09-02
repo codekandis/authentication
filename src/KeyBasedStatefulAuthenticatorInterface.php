@@ -8,17 +8,6 @@ namespace CodeKandis\Authentication;
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-interface KeyBasedStatefulAuthenticatorInterface extends KeyBasedStatelessAuthenticatorInterface
+interface KeyBasedStatefulAuthenticatorInterface extends StatefulAuthenticatorInterface, KeyBasedStatelessAuthenticatorInterface
 {
-	/**
-	 * Determines if the client has been granted permission.
-	 * @return bool True if the client has been granted permission, false otherwise.
-	 * @throws AuthenticationIsCorruptedException The authentication data is corrupted.
-	 */
-	public function isClientGranted(): bool;
-
-	/**
-	 * Revokes the permission of the client.
-	 */
-	public function revokePermission(): void;
 }

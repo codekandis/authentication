@@ -3,7 +3,7 @@ namespace CodeKandis\Authentication;
 
 /**
  * Represents a common stateless authenticator.
- * A common authenticator is based on clients providing an ID and a password.
+ * A common authenticator is based on clients providing an ID and a key.
  * A stateless authenticator does not persist the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
@@ -20,7 +20,7 @@ class CommonStatelessAuthenticator implements CommonStatelessAuthenticatorInterf
 			if (
 				Permission::GRANTED === $registeredClientFetched->getPermission()
 				&& $registeredClientFetched->getId() === $clientCredentials->getId()
-				&& $registeredClientFetched->getPassCode() === $clientCredentials->getPassCodeSha512()
+				&& $registeredClientFetched->getKey() === $clientCredentials->getKeySha512()
 			)
 			{
 				return true;

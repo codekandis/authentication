@@ -2,11 +2,11 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents the interface of all registered key based clients providing a key.
+ * Represents the interface of any registered key based client providing a key.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-interface RegisteredKeyBasedClientInterface
+interface RegisteredKeyBasedClientInterface extends RegisteredClientInterface
 {
 	/**
 	 * Gets the description of the client.
