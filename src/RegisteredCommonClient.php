@@ -2,18 +2,12 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents a registered common client providing an ID and a password.
+ * Represents a registered common client providing an ID and a key.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-class RegisteredCommonClient implements RegisteredCommonClientInterface
+class RegisteredCommonClient extends AbstractRegisteredClient implements RegisteredCommonClientInterface
 {
-	/**
-	 * Stores the description of the client.
-	 * @var string
-	 */
-	private string $description;
-
 	/**
 	 * Stores the ID of the client.
 	 * @var string
@@ -21,38 +15,24 @@ class RegisteredCommonClient implements RegisteredCommonClientInterface
 	private string $id;
 
 	/**
-	 * Stores the password of the client.
+	 * Stores the key of the client.
 	 * @var string
 	 */
-	private string $password;
-
-	/**
-	 * Stores the permission of the client.
-	 * @var int
-	 */
-	private int $permission;
+	private string $key;
 
 	/**
 	 * Constructor method.
 	 * @param string $description The description of the client.
-	 * @param string $id The ID of the client.
-	 * @param string $password The password of the client.
 	 * @param int $permission The permission of the client.
+	 * @param string $id The ID of the client.
+	 * @param string $key The key of the client.
 	 */
-	public function __construct( string $description, string $id, string $password, int $permission )
+	public function __construct( string $description, int $permission, string $id, string $key )
 	{
-		$this->description = $description;
-		$this->id          = $id;
-		$this->password    = $password;
-		$this->permission  = $permission;
-	}
+		parent::__construct( $description, $permission );
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getDescription(): string
-	{
-		return $this->description;
+		$this->id  = $id;
+		$this->key = $key;
 	}
 
 	/**
@@ -66,16 +46,8 @@ class RegisteredCommonClient implements RegisteredCommonClientInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function getPassCode(): string
+	public function getKey(): string
 	{
-		return $this->password;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getPermission(): int
-	{
-		return $this->permission;
+		return $this->key;
 	}
 }

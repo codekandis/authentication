@@ -4,7 +4,7 @@ namespace CodeKandis\Authentication;
 use function hash;
 
 /**
- * Represents common client credentials providing an ID and a password.
+ * Represents common client credentials providing an ID and a key.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
@@ -17,27 +17,27 @@ class CommonClientCredentials implements CommonClientCredentialsInterface
 	private string $id;
 
 	/**
-	 * Stores the password of the client.
+	 * Stores the key of the client.
 	 * @var string
 	 */
-	private string $password;
+	private string $key;
 
 	/**
-	 * Stores the SHA512 hash of the password of the client.
+	 * Stores the SHA512 hash of the key of the client.
 	 * @var string
 	 */
-	private string $passwordSha512;
+	private string $keySha512;
 
 	/**
 	 * Constructor method.
 	 * @param string $id The ID of the client.
-	 * @param string $password The password of the client.
+	 * @param string $key The key of the client.
 	 */
-	public function __construct( string $id, string $password )
+	public function __construct( string $id, string $key )
 	{
-		$this->id             = $id;
-		$this->password       = $password;
-		$this->passwordSha512 = hash( 'sha512', $password );
+		$this->id        = $id;
+		$this->key       = $key;
+		$this->keySha512 = hash( 'sha512', $key );
 	}
 
 	/**
@@ -51,16 +51,16 @@ class CommonClientCredentials implements CommonClientCredentialsInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function getPassCode(): string
+	public function getKey(): string
 	{
-		return $this->password;
+		return $this->key;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getPassCodeSha512(): string
+	public function getKeySha512(): string
 	{
-		return $this->passwordSha512;
+		return $this->keySha512;
 	}
 }

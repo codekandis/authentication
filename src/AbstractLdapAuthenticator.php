@@ -10,7 +10,7 @@ use CodeKandis\Ldap\Search\Filters\LdapSearchLogicalAndOperatorFilter;
 
 /**
  * Represents the base class of any LDAP authenticator.
- * An LDAP authenticator is based on clients providing an ID and a password.
+ * An LDAP authenticator is based on clients providing an ID and a key.
  * A stateless authenticator does not persist the clients' permission.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
@@ -47,11 +47,11 @@ abstract class AbstractLdapAuthenticator implements LdapStatelessAuthenticatorIn
 
 	/**
 	 * Authenticates the client.
-	 * @param LdapClientCredentialsInterface $clientCredentials The credentials of the client to be authenticated.
+	 * @param CommonClientCredentialsInterface $clientCredentials The credentials of the client to be authenticated.
 	 * @return bool True if the client has been authenticated, false otherwise.
 	 * @throws NoLdapConnectorProvidedException No LDAP connector has been provided.
 	 */
-	protected function authenticate( LdapClientCredentialsInterface $clientCredentials ): bool
+	protected function authenticate( CommonClientCredentialsInterface $clientCredentials ): bool
 	{
 		if ( null === $this->ldapConnector )
 		{
@@ -63,7 +63,7 @@ abstract class AbstractLdapAuthenticator implements LdapStatelessAuthenticatorIn
 			$this->ldapConnector->authenticate(
 				new OriginLdapClientCredentials(
 					$clientCredentials->getId(),
-					$clientCredentials->getPassCode()
+					$clientCredentials->getKey()
 				)
 			);
 		}

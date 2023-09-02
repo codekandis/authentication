@@ -2,18 +2,12 @@
 namespace CodeKandis\Authentication;
 
 /**
- * Represents the interface of all registered common clients providing an ID and a password.
+ * Represents the interface of any registered common client providing an ID and a key.
  * @package codekandis/authentication
  * @author Christian Ramelow <info@codekandis.net>
  */
-interface RegisteredCommonClientInterface
+interface RegisteredCommonClientInterface extends RegisteredClientInterface
 {
-	/**
-	 * Gets the description of the client.
-	 * @return string The description of the client.
-	 */
-	public function getDescription(): string;
-
 	/**
 	 * Gets the ID of the client.
 	 * @return string The ID of the client.
@@ -21,14 +15,8 @@ interface RegisteredCommonClientInterface
 	public function getId(): string;
 
 	/**
-	 * Gets the password of the client.
-	 * @return string The password of the client.
+	 * Gets the key of the client.
+	 * @return string The key of the client.
 	 */
-	public function getPassCode(): string;
-
-	/**
-	 * Gets the permission of the client.
-	 * @return int The permission of the client.
-	 */
-	public function getPermission(): int;
+	public function getKey(): string;
 }
