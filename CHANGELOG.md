@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [keep a changelog][xtlink-keep-a-changelog]
 and this project adheres to [Semantic Versioning 2.0.0][xtlink-semantic-versioning].
 
+## [0.10.0] - 2025-09-05
+
+### Changed
+
+* composer package dependencies
+  * removed
+    * `codekandis/session`
+  * added
+    * `codekandis/sessions` [^0]
+* session library imports
+
+[0.10.0]: https://github.com/codekandis/authentication/compare/0.9.0...0.10.0
+
+---
 ## [0.9.0] - 2022-08-11
 
 ### Changed
