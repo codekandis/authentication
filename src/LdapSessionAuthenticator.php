@@ -4,8 +4,8 @@ namespace CodeKandis\Authentication;
 use CodeKandis\Authentication\Configurations\LdapSessionAuthenticatorConfigurationInterface;
 use CodeKandis\Authentication\Configurations\SessionAuthenticatorConfigurationInterface;
 use CodeKandis\Ldap\LdapConnectorInterface;
-use CodeKandis\Session\SessionHandlerInterface;
-use CodeKandis\Session\SessionKeyNotFoundException;
+use CodeKandis\Sessions\SessionHandlerInterface;
+use CodeKandis\Sessions\SessionKeyNotFoundException;
 use function sprintf;
 
 /**
